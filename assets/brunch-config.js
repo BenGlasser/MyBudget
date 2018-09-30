@@ -44,10 +44,11 @@ exports.config = {
 
   // Configure your plugins
   plugins: {
-    babel: {
-      // Do not use ES6 compiler in vendor code
-      ignore: [/vendor/]
-    }
+      babel: {
+          presets: ["es2015", "react"],
+          // Do not use ES6 compiler in vendor code
+          ignore: [/web\/static\/vendor/]
+      }
   },
 
   modules: {
@@ -57,6 +58,7 @@ exports.config = {
   },
 
   npm: {
-    enabled: true
+    enabled: true,
+    whitelist: ["phoenix", "phoenix_html", "react", "react-dom"]
   }
 };
