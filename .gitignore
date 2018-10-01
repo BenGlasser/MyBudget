@@ -29,3 +29,6 @@ npm-debug.log
 #Intellij
 *.iml
 .idea/
+
+#Misc
+*.bak
