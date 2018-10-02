@@ -20,11 +20,18 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
-import React from "react"
+import axios from 'axios'
+import React, { Component } from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-class HelloReact extends React.Component {
+const EXPENSES = {
+    source: 0,
+    category: 1,
+    amount: 2
+}
+
+class HelloReact extends Component {
     render() {
         return (
             <Router>
@@ -37,17 +44,39 @@ class HelloReact extends React.Component {
     }
 }
 
-class Home extends React.Component {
+class Home extends Component {
+    constructor() {
+        super()
+        this.state = {
+            data: []
+
+        }
+    }
+
     render() {
         return (
             <div>
-            <h1>Hello React!</h1>
-        <Link to="/login">Login</Link>
+                <h1>Hello React!</h1>
+                    {this.state.data}
+                <Link to="/login">Login</Link>
             </div>
     )
     }
+
+    componentDidMount() {
+        axios.get('http://localhost:4000/credits')
+            .then(response => {
+                this.setState((prev, props) => ({
+                    data: response.data.data.map(
+                        data => [data.source, data.category, data.amount])
+                }))
+                console.log("state", this.state)
+            }).catch(error => console.log(error))
+
+    }
+
 }
-class Login extends React.Component {
+class Login extends Component {
     render() {
         return (
             <div>
