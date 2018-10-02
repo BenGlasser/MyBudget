@@ -197,4 +197,100 @@ defmodule Mybudget.Budgets do
   def change_credit(%Credit{} = credit) do
     Credit.changeset(credit, %{})
   end
+
+  alias Mybudget.Budgets.Debit
+
+  @doc """
+  Returns the list of debits.
+
+  ## Examples
+
+      iex> list_debits()
+      [%Debit{}, ...]
+
+  """
+  def list_debits do
+    Repo.all(Debit)
+  end
+
+  @doc """
+  Gets a single debit.
+
+  Raises `Ecto.NoResultsError` if the Debit does not exist.
+
+  ## Examples
+
+      iex> get_debit!(123)
+      %Debit{}
+
+      iex> get_debit!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_debit!(id), do: Repo.get!(Debit, id)
+
+  @doc """
+  Creates a debit.
+
+  ## Examples
+
+      iex> create_debit(%{field: value})
+      {:ok, %Debit{}}
+
+      iex> create_debit(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_debit(attrs \\ %{}) do
+    %Debit{}
+    |> Debit.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a debit.
+
+  ## Examples
+
+      iex> update_debit(debit, %{field: new_value})
+      {:ok, %Debit{}}
+
+      iex> update_debit(debit, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_debit(%Debit{} = debit, attrs) do
+    debit
+    |> Debit.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Debit.
+
+  ## Examples
+
+      iex> delete_debit(debit)
+      {:ok, %Debit{}}
+
+      iex> delete_debit(debit)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_debit(%Debit{} = debit) do
+    Repo.delete(debit)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking debit changes.
+
+  ## Examples
+
+      iex> change_debit(debit)
+      %Ecto.Changeset{source: %Debit{}}
+
+  """
+  def change_debit(%Debit{} = debit) do
+    Debit.changeset(debit, %{})
+  end
 end

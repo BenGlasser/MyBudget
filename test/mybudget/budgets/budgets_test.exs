@@ -130,4 +130,68 @@ defmodule Mybudget.BudgetsTest do
       assert %Ecto.Changeset{} = Budgets.change_credit(credit)
     end
   end
+
+  describe "debits" do
+    alias Mybudget.Budgets.Debit
+
+    @valid_attrs %{amount: 120.5, category: "some category", item: "some item"}
+    @update_attrs %{amount: 456.7, category: "some updated category", item: "some updated item"}
+    @invalid_attrs %{amount: nil, category: nil, item: nil}
+
+    def debit_fixture(attrs \\ %{}) do
+      {:ok, debit} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Budgets.create_debit()
+
+      debit
+    end
+
+    test "list_debits/0 returns all debits" do
+      debit = debit_fixture()
+      assert Budgets.list_debits() == [debit]
+    end
+
+    test "get_debit!/1 returns the debit with given id" do
+      debit = debit_fixture()
+      assert Budgets.get_debit!(debit.id) == debit
+    end
+
+    test "create_debit/1 with valid data creates a debit" do
+      assert {:ok, %Debit{} = debit} = Budgets.create_debit(@valid_attrs)
+      assert debit.amount == 120.5
+      assert debit.category == "some category"
+      assert debit.item == "some item"
+    end
+
+    test "create_debit/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Budgets.create_debit(@invalid_attrs)
+    end
+
+    test "update_debit/2 with valid data updates the debit" do
+      debit = debit_fixture()
+      assert {:ok, debit} = Budgets.update_debit(debit, @update_attrs)
+      assert %Debit{} = debit
+      assert debit.amount == 456.7
+      assert debit.category == "some updated category"
+      assert debit.item == "some updated item"
+    end
+
+    test "update_debit/2 with invalid data returns error changeset" do
+      debit = debit_fixture()
+      assert {:error, %Ecto.Changeset{}} = Budgets.update_debit(debit, @invalid_attrs)
+      assert debit == Budgets.get_debit!(debit.id)
+    end
+
+    test "delete_debit/1 deletes the debit" do
+      debit = debit_fixture()
+      assert {:ok, %Debit{}} = Budgets.delete_debit(debit)
+      assert_raise Ecto.NoResultsError, fn -> Budgets.get_debit!(debit.id) end
+    end
+
+    test "change_debit/1 returns a debit changeset" do
+      debit = debit_fixture()
+      assert %Ecto.Changeset{} = Budgets.change_debit(debit)
+    end
+  end
 end

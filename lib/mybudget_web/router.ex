@@ -17,8 +17,9 @@ defmodule MybudgetWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    resources "/expenses", ExpenseController
+    resources "/json/expenses", ExpenseController
     resources "/credits", CreditController, except: [:new, :edit]
+    resources "/json/debits", DebitController, except: [:new, :edit]
 
     # Other scopes may use custom stacks.
     # scope "/api", MybudgetWeb do
