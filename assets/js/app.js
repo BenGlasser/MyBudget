@@ -36,15 +36,16 @@ class HelloReact extends Component {
         return (
             <Router>
                 <div>
-                <Route exact path="/" component={Home}/>
-            <Route path="/login" component={Login}/>
-            </div>
+                    <Route exact path="/" component={Home}/>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/debit" component={Debits}/>
+                </div>
             </Router>
         )
     }
 }
 
-class Home extends Component {
+class Debits extends Component {
     constructor() {
         super()
         this.state = {
@@ -56,26 +57,72 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h1>Hello React!</h1>
-                    {this.state.data}
-                <Link to="/login">Login</Link>
+                <h1>Debits</h1>
+                <svg width="960" height="500"></svg>
             </div>
-    )
+        )
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/credits')
+        axios.get('http://localhost:4000/json/debits')
             .then(response => {
                 this.setState((prev, props) => ({
                     data: response.data.data.map(
-                        data => [data.source, data.category, data.amount])
+                        data => [data.item, data.category, data.amount])
                 }))
                 console.log("state", this.state)
+                var svg = d3.select("svg"),
+                    width = +svg.attr("width"),
+                    height = +svg.attr("height"),
+                    radius = Math.min(width, height) / 2,
+                    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+                let color = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"];
+
+                let data = this.state.data
+
+                let pie = d3.pie()
+                    .sort(null)
+                    .value(function(d) { return d[2]; });
+
+                let path = d3.arc()
+                    .outerRadius(radius - 10)
+                    .innerRadius(0);
+
+                let label = d3.arc()
+                    .outerRadius(radius - 40)
+                    .innerRadius(radius - 40);
+
+                let arc = g.selectAll(".arc")
+                    .data(pie(data))
+                    .enter().append("g")
+                    .attr("class", "arc");
+
+                let colorCount = 0
+                arc.append("path")
+                    .attr("d", path)
+                    .attr("fill", function() { return color[colorCount++%7]});
+
+                arc.append("text")
+                    .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
+                    .attr("dy", "0.35em")
+                    .text(function(d) { return d.data[1]; });
             }).catch(error => console.log(error))
 
     }
-
 }
+
+class Home extends Component {
+    render() {
+        return (
+            <div>
+                <h1>Hello React!</h1>
+                <Link to="/debit">Debits</Link>
+            </div>
+        )
+    }
+}
+
 class Login extends Component {
     render() {
         return (
