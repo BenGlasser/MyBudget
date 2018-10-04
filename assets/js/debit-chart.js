@@ -15,11 +15,12 @@ class DebitChart extends Component {
     }
 
     renderChart(){
-        d3.selectAll("svg").remove()
+        d3.select("#pie-chart").remove()
         var chart = d3.selectAll("#chart")
         chart.append("svg")
+            .attr("id", "pie-chart")
 
-        var svg = chart.select("svg"),
+        var svg = chart.select("#pie-chart"),
             width = 900,
             height = 500,
             radius = Math.min(width, height) / 2,

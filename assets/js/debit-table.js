@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios/index"
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -7,9 +8,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
     root: {
+        color: theme.palette.text.primary,
         width: '100%',
         marginTop: theme.spacing.unit * 3,
         overflowX: 'auto',
@@ -19,25 +23,24 @@ const styles = theme => ({
     },
     cell: {
         fontSize: '1em'
-    }
+    },
+    icon: {
+        margin: theme.spacing.unit,
+        fontSize: 24,
+    },
+    button: {
+        margin: theme.spacing.unit,
+        padding: 0,
+    },
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-    id += 1;
-    return { id, name, calories, fat, carbs, protein };
-}
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 function DebitTable(props) {
     const { classes } = props;
+    function deleteHandler() {
+        alert('delete')
+    }
 
     return (
         <Paper className={classes.root}>
@@ -56,6 +59,16 @@ function DebitTable(props) {
                                 <TableCell className={classes.cell}>{row[1]}</TableCell>
                                 <TableCell className={classes.cell}>{row[2]}</TableCell>
                                 <TableCell className={classes.cell} numeric>{row[3]}</TableCell>
+                                <TableCell className={classes.cell} numeric>
+                                    <IconButton className={classes.button}
+                                                aria-label="Delete"
+                                                onClick={() => {
+                                                    alert('are you sure you want to delete "' + row[1] + '"')
+                                                    axios.delete('http://localhost:4000/json/debits/' + row[0])
+                                                }}>
+                                        <DeleteForeverIcon className={classes.icon} />
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
                         );
                     })}
