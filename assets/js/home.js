@@ -3,7 +3,7 @@ import React, { Component } from "react"
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import ExpenseTable from './expense-table'
+import DebitTable from './debit-table'
 import DebitChart from './debit-chart'
 import DebitForm from './debit-form'
 
@@ -44,7 +44,7 @@ class Home extends Component {
                 </AppBar>
                 <div className={"container"}>
                     <DebitForm/>
-                    <ExpenseTable data={ this.state.data }/>
+                    <DebitTable data={ this.state.data }/>
                     <DebitChart data={ this.state.data }/>
                 </div>
             </div>

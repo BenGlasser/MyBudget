@@ -36,7 +36,7 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-function ExpenseTable(props) {
+function DebitTable(props) {
     const { classes } = props;
 
     return (
@@ -65,8 +65,8 @@ function ExpenseTable(props) {
     );
 }
 
-ExpenseTable.propTypes = {
+DebitTable.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ExpenseTable);
+export default withStyles(styles)(DebitTable);
