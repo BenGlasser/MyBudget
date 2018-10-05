@@ -30,12 +30,23 @@ class DebitChart extends Component {
         svg.attr("width", width)
 
         let color = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"],
-            data = this.props.data.map(data => {return [data[1], data[2], data[3]]}),
             pie = d3.pie()
                 .sort(null)
                 .value(function (d) {
-                    return d[2];
-            });
+                    return d[1];
+            }),
+            data = {}
+
+        this.props.data.forEach(datum => {
+            if (datum[2] in data) {
+                data[datum[2]] += datum[3]
+            }
+            else {
+                data[datum[2]] = datum[3]
+            }
+
+        })
+        data = Object.keys(data).map(key => [key, data[key]])
 
         let path = d3.arc()
             .outerRadius(radius - 10)
@@ -63,7 +74,7 @@ class DebitChart extends Component {
             })
             .attr("dy", "0.35em")
             .text(function (d) {
-                return d.data[1];
+                return d.data[0];
             });
     }
     componentDidMount() {
