@@ -38,7 +38,7 @@ const styles = theme => ({
 
 class DebitTable extends Component {
      deleteHandler() {
-        alert('delete')
+        confirm('delete')
     }
 
     render() {
@@ -64,8 +64,9 @@ class DebitTable extends Component {
                                         <IconButton className={classes.button}
                                                     aria-label="Delete"
                                                     onClick={() => {
-                                                        alert('are you sure you want to delete "' + row[1] + '"')
-                                                        axios.delete('http://localhost:4000/json/debits/' + row[0])
+                                                        if (confirm('are you sure you want to delete "' + row[1] + '"')) {
+                                                            axios.delete('http://localhost:4000/json/debits/' + row[0])
+                                                        }
                                                     }}>
                                             <DeleteForeverIcon className={classes.icon}/>
                                         </IconButton>
