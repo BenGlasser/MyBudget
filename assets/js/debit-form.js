@@ -1,6 +1,27 @@
 import axios from "axios/index"
 import React, { Component } from "react"
 import Button from '@material-ui/core/Button'
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    margin: {
+        margin: theme.spacing.unit,
+    },
+    textField: {
+        flexBasis: 200,
+        fontSize: 1.5
+    },
+    button: {
+        marginTop: 12
+    }
+});
 
 class DebitForm extends Component {
     constructor(props) {
@@ -71,29 +92,51 @@ class DebitForm extends Component {
             });
         event.preventDefault();
     }
+    handleChange(event){}
 
     render() {
+        const { classes } = this.props
         return (
             <form onSubmit={this.handleSubmit}>
-                <label>
-                    Item:
-                    <input type="text" value={this.state.item} onChange={this.handleItemChange} />
-                </label>
-                <label>
-                    Category:
-                    <input type="text" value={this.state.category} onChange={this.handleCategoryChange} />
-                </label>
-                <label>
-                    Amount:
-                    <input type="text" pattern="[0-9]*|[0-9]*\.[0-9]+" value={this.state.amount} onChange={this.handleAmountChange} />
-                </label>
-                <input type="submit" value="Submit" />
-                <Button variant="contained" color="primary">
-                    Hello World
+                <TextField
+                    id="outlined-adornment-item"
+                    className={classNames(classes.margin, classes.textField)}
+                    variant="outlined"
+                    label="Item"
+                    value={this.state.item}
+                    onChange={this.handleItemChange}
+                />
+                <TextField
+                    id="outlined-adornment-category"
+                    className={classNames(classes.margin, classes.textField)}
+                    variant="outlined"
+                    label="Category"
+                    value={this.state.category}
+                    onChange={this.handleCategoryChange}
+                />
+                <TextField
+                    id="outlined-adornment-amount"
+                    className={classNames(classes.margin, classes.textField)}
+                    variant="outlined"
+                    label="Amount"
+                    value={this.state.amount}
+                    onChange={this.handleAmountChange}
+                    pattern="[0-9]*|[0-9]*\.[0-9]{2}"
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    }}
+
+                />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    type='submit'
+                    className={classes.button}>
+                    Submit
                 </Button>
             </form>
         );
     }
 }
 
-export default DebitForm
+export default withStyles(styles)(DebitForm)
