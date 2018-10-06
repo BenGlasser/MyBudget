@@ -9,17 +9,19 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({
     root: {
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'wrap'
     },
     margin: {
         margin: theme.spacing.unit,
+        marginLeft: 0,
+        marginRight: theme.spacing.unit * 2
     },
     textField: {
-        flexBasis: 200,
-        fontSize: 1.5
+        flexBasis: 200
     },
     button: {
-        marginTop: 12
+        marginTop: 12,
+        fontSize: '1em'
     }
 });
 

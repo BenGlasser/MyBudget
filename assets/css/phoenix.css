@@ -41,7 +41,7 @@ form, ul, table {
 @media (min-width: 768px) {
   .container {
     font-size: 1em;
-    max-width: 90%;
+    width: 95%;
   }
 }
 .container-narrow > hr {

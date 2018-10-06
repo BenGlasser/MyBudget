@@ -26,7 +26,6 @@ const styles = theme => ({
     },
     icon: {
         margin: theme.spacing.unit,
-        fontSize: 24,
     },
     button: {
         margin: theme.spacing.unit,
@@ -51,6 +50,7 @@ class DebitTable extends Component {
                             <TableCell className={classes.cell}>Item</TableCell>
                             <TableCell className={classes.cell}>Category</TableCell>
                             <TableCell className={classes.cell} numeric>Amount $</TableCell>
+                            <TableCell className={classes.cell} numeric/>
                         </TableRow>
                     </TableHead>
                     <TableBody>

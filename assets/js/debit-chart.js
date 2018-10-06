@@ -73,8 +73,9 @@ class DebitChart extends Component {
                 return "translate(" + label.centroid(d) + ")";
             })
             .attr("dy", "0.35em")
+            .attr("text-anchor", "middle")
             .text(function (d) {
-                return d.data[0];
+                return d.data[0].charAt(0).toUpperCase() + d.data[0].slice(1);
             });
     }
     componentDidMount() {

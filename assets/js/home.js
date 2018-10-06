@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -20,6 +19,12 @@ const styles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
+    white: {
+        color: 'white'
+    },
+    titleBar: {
+        marginBottom: 15
+    }
 });
 
 class Home extends Component {
@@ -48,24 +53,36 @@ class Home extends Component {
     }
 
     render() {
+        const { classes } = this.props
         return (
             <div>
-                <AppBar position="static" color="primary">
+                <AppBar position="static" color="primary" className={classes.titleBar}>
                     <Toolbar>
-                        <Typography variant="title">
+                        <Typography
+                            className={classes.white}
+                            variant="title">
                             My Budget
                         </Typography>
                     </Toolbar>
                 </AppBar>
                 <div className={"container"}>
-                    <Grid container aspacing={24}>
+                    <Grid container spacing={24}>
                         <Grid item xs={12}>
+                            <Typography variant="display3" gutterBottom>
+                                Add Debit
+                            </Typography>
                             <DebitForm/>
                         </Grid>
                         <Grid item xs={12} sm={6}>
+                            <Typography variant="display3" gutterBottom>
+                                Itemized Debits
+                            </Typography>
                             <DebitTable data={ this.state.data }/>
                         </Grid>
                         <Grid item xs={12} sm={6}>
+                            <Typography variant="display3" gutterBottom>
+                                Overview
+                            </Typography>
                             <DebitChart data={ this.state.data }/>
                         </Grid>
 
@@ -76,4 +93,4 @@ class Home extends Component {
     }
 }
 
-export default Home
+export default withStyles(styles)(Home)
