@@ -6,6 +6,21 @@ import Typography from '@material-ui/core/Typography';
 import DebitTable from './debit-table'
 import DebitChart from './debit-chart'
 import DebitForm from './debit-form'
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing.unit * 2,
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+});
 
 class Home extends Component {
 
@@ -43,9 +58,18 @@ class Home extends Component {
                     </Toolbar>
                 </AppBar>
                 <div className={"container"}>
-                    <DebitForm/>
-                    <DebitTable data={ this.state.data }/>
-                    <DebitChart data={ this.state.data }/>
+                    <Grid container aspacing={24}>
+                        <Grid item xs={12}>
+                            <DebitForm/>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <DebitTable data={ this.state.data }/>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <DebitChart data={ this.state.data }/>
+                        </Grid>
+
+                    </Grid>
                 </div>
             </div>
         )
