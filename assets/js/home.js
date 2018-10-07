@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import DebitTable from './debit-table'
 import DebitChart from './debit-chart'
 import DebitForm from './debit-form'
+import EnhancedTable from './enhanced-table'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -77,7 +78,7 @@ class Home extends Component {
                             <Typography variant="display3" gutterBottom>
                                 Itemized Debits
                             </Typography>
-                            <DebitTable data={ this.state.data }/>
+                            <EnhancedTable data={ this.state.data }/>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <Typography variant="display3" gutterBottom>
