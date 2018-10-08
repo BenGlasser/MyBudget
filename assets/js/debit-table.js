@@ -104,7 +104,6 @@ class EnhancedTableHead extends React.Component {
 EnhancedTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.string.isRequired,
     orderBy: PropTypes.number.isRequired,
     rowCount: PropTypes.number.isRequired,
@@ -138,11 +137,6 @@ class DebitTable extends React.Component {
             rowsPerPage: 5,
         };
         this.handleRequestSort = this.handleRequestSort.bind(this)
-        this.handleSelectAllClick = this.handleSelectAllClick.bind(this)
-        this.handleClick = this.handleClick.bind(this)
-        this.handleChangePage = this.handleChangePage.bind(this)
-        this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this)
-        this.isSelected = this.isSelected.bind(this)
     }
 
 
@@ -159,47 +153,6 @@ class DebitTable extends React.Component {
             return { order, orderBy }
         });
     };
-
-    handleSelectAllClick (event) {
-        if (event.target.checked) {
-            this.setState(state => ({ selected: state.data.map(n => n.id) }));
-            return;
-        }
-        this.setState({ selected: [] });
-    };
-
-    handleClick (event, id) {
-        const { selected } = this.state;
-        const selectedIndex = selected.indexOf(id);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        this.setState({ selected: newSelected });
-    };
-
-    handleChangePage (event, page) {
-        this.setState({ page });
-    };
-
-    handleChangeRowsPerPage  (event) {
-        this.setState({ rowsPerPage: event.target.value });
-    };
-
-    isSelected(id) {
-        return this.state.selected.indexOf(id) !== -1
-    }
 
     render() {
         const { classes } = this.props;
@@ -221,15 +174,11 @@ class DebitTable extends React.Component {
                             {stableSort(this.props.data, getSorting(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map(n => {
-                                    const isSelected = this.isSelected(n[0]);
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={event => this.handleClick(event, n[0])}
-                                            aria-checked={isSelected}
                                             tabIndex={-1}
                                             key={n[0]}
-                                            selected={isSelected}
                                         >
                                             <TableCell className={classes.tableText}>{n[1]}</TableCell>
                                             <TableCell className={classes.tableText}>{n[2]}</TableCell>
