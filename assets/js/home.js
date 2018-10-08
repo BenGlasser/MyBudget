@@ -3,14 +3,12 @@ import React, { Component } from "react"
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import DebitTable from './debit-table'
 import DebitChart from './debit-chart'
 import DebitForm from './debit-form'
-import EnhancedTable from './enhanced-table'
-import PropTypes from 'prop-types';
+import DebitTable from './debit-table'
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -45,7 +43,6 @@ class Home extends Component {
                         data: response.data.data.map(
                             data => [data.id, data.item, data.category, data.amount])
                     }))
-                    console.log("state", this.state)
                 }).catch(error => console.log(error))
         }
         setDebits()
@@ -78,7 +75,7 @@ class Home extends Component {
                             <Typography variant="display3" gutterBottom>
                                 Itemized Debits
                             </Typography>
-                            <EnhancedTable data={ this.state.data }/>
+                            <DebitTable data={ this.state.data }/>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <Typography variant="display3" gutterBottom>
